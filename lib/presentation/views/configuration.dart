@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:uchinoko_project_mobile/main.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_index_screen.dart';
 
 Color primaryGreen = Color(0xff416d6d);
 List<BoxShadow> shadowList = [
@@ -16,27 +18,29 @@ List<Map> categories = [
 
 List<Map> drawerItems=[
   {
-    'icon': FontAwesomeIcons.paw,
-    'title' : 'Adoption'
+    'icon': FontAwesomeIcons.home,
+    'title' : 'タイムライン',
+    'screen': HomePage(),
   },
   {
-    'icon': Icons.mail,
-    'title' : 'Donation'
+    'icon': FontAwesomeIcons.paw,
+    'title' : 'うちの子 一覧',
+    'screen': MyPetsIndexScreen(),
   },
   {
     'icon': FontAwesomeIcons.plus,
-    'title' : 'Add pet'
+    'title' : 'うちの子 追加'
   },
   {
     'icon': Icons.favorite,
-    'title' : 'Favorites'
+    'title' : 'お気に入り'
   },
   {
     'icon': Icons.mail,
-    'title' : 'Messages'
+    'title' : 'メッセージ'
   },
   {
     'icon': FontAwesomeIcons.userAlt,
-    'title' : 'Profile'
+    'title' : 'アカウント'
   },
 ];
