@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uchinoko_project_mobile/main.dart';
 import 'package:uchinoko_project_mobile/presentation/views/my_pets_index_screen.dart';
 
-Color primaryGreen = Color(0xff416d6d);
+Color primaryGreen = Colors.cyan[600];
 List<BoxShadow> shadowList = [
   BoxShadow(color: Colors.grey[300], blurRadius: 30, offset: Offset(0, 10))
 ];

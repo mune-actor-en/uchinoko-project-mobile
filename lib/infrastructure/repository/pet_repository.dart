@@ -7,9 +7,7 @@ class PetModelRepository {
 
   Future<List<PetModel>> fetchPets() async {
     try {
-      print("============ 003 01 ============");
       final extractedData = await httpService.fetchPets();
-      print("============ 003 02 ============");
       List<PetModel> pets = [];
       extractedData.forEach((element) {
         pets.add(PetModel.fromMap(element));

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
+import 'package:uchinoko_project_mobile/presentation/views/login_page/login_page.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:uchinoko_project_mobile/providers.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -9,6 +12,7 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       color: primaryGreen,
       padding: EdgeInsets.only(top: 50, bottom: 70, left: 10),
@@ -98,10 +102,21 @@ class _DrawerScreenState extends State<DrawerScreen> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                'Log out',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  context.read(sessionNotifierProvider).logout();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LoginPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Log out',
+                  style:
+                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               )
             ],
           )

@@ -34,12 +34,9 @@ class PetsNotifier extends StateNotifier<PetsState> {
 
   Future<void> fetchPets() async {
     try {
-      await Future.delayed(Duration(milliseconds: 1000));
-      print("============ 003 ============");
+      await Future.delayed(Duration(milliseconds: 1500));
       state = PetsLoading();
       final List<PetModel> pets = await petModelRepository.fetchPets();
-      print(pets);
-      print("============ 004 ============");
       state = PetsLoaded(pets: pets);
     } on Exception {
       state = PetsError(

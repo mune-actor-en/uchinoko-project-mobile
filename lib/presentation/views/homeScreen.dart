@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/screen2.dart';
+import 'package:uchinoko_project_mobile/providers.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundImage: NetworkImage(
                       "https://user-images.githubusercontent.com/46050182/100489814-01167a00-315a-11eb-885b-2156062cc5bf.png"
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

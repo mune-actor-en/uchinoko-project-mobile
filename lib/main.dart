@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
 import 'package:uchinoko_project_mobile/presentation/views/homeScreen.dart';
+import 'package:uchinoko_project_mobile/presentation/views/login_page/login_page.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: LoginPage(),
       theme: ThemeData(fontFamily: 'Circular'),
       debugShowCheckedModeBanner: false,
     );

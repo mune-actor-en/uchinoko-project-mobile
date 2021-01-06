@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -125,7 +123,6 @@ class __ScreenState extends State<_Screen> {
                     final state = watch(petsNotifierProvider.state);
 
                     if (state is PetsInitial) {
-                      print("============ 001 ============");
                       _fetchPets(context);
                       return _buildLoading();
                     } else if (state is PetsLoading) {
@@ -146,7 +143,6 @@ class __ScreenState extends State<_Screen> {
   }
 
   void _fetchPets(BuildContext context) {
-    print("============ 002 ============");
     context.read(petsNotifierProvider).fetchPets();
   }
 
@@ -186,6 +182,7 @@ class PetTile extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 24),
       leading: CircleAvatar(
+        backgroundColor: primaryGreen,
         backgroundImage: NetworkImage(pet.imagePath),
         radius: 36,
       ),
