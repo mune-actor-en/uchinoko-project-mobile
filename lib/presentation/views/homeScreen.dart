@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/screen2.dart';
-import 'package:uchinoko_project_mobile/providers.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -67,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icons.location_on,
                             color: primaryGreen,
                           ),
-                          Text('Ukraine'),
+                          Text('uchinoko island'),
                         ],
                       ),
                     ],
@@ -150,12 +149,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             margin: EdgeInsets.only(top: 50),
                           ),
-                          Align(
-                            child: Hero(
-                                tag: 1,
-                                child:
-                                    Image.asset('assets/images/pet-cat2.png')),
-                          )
+                          // Align(
+                          //   child: Hero(
+                          //       tag: 1,
+                          //       child:
+                          //           Image.asset('assets/images/pet-cat2.png')),
+                          // )
                         ],
                       ),
                     ),
@@ -191,9 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           margin: EdgeInsets.only(top: 50),
                         ),
-                        Align(
-                          child: Image.asset('assets/images/pet-cat1.png'),
-                        )
+                        // Align(
+                        //   child: Image.asset('assets/images/pet-cat1.png'),
+                        // )
                       ],
                     ),
                   ),
@@ -209,6 +208,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ))
+                ],
+              ),
+            ),
+            Container(
+              height: 240,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.orange[100],
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: shadowList,
+                          ),
+                          margin: EdgeInsets.only(top: 50),
+                        ),
+                        // Align(
+                        //   child: Image.asset('assets/images/pet-cat1.png'),
+                        // )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 60, bottom: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: shadowList,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                      ))
                 ],
               ),
             ),

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
-import 'package:uchinoko_project_mobile/presentation/views/loading_circle.dart';
-import 'package:uchinoko_project_mobile/providers.dart';
+import 'package:uchinoko_project_mobile/presentation/views/profile/components/body.dart';
 
-class MyPetsIndexScreen extends StatelessWidget {
+class AddPetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,23 +84,19 @@ class __ScreenState extends State<_Screen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Location'),
+                        Text('うちの子 登録'),
                         Row(
                           children: [
                             Icon(
                               Icons.location_on,
                               color: primaryGreen,
                             ),
-                            Text('Ukraine'),
+                            Text('uchinoko island'),
                           ],
                         ),
                       ],
                     ),
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(
-                          "https://user-images.githubusercontent.com/46050182/100489814-01167a00-315a-11eb-885b-2156062cc5bf.png"),
-                    )
+                    Text('登録', style: TextStyle(color: Colors.lightBlue),)
                   ],
                 ),
               ),
@@ -112,28 +105,14 @@ class __ScreenState extends State<_Screen> {
                 alignment: Alignment.bottomLeft,
                 padding: EdgeInsets.symmetric(horizontal: 36),
                 child: Text(
-                  "うちの子 一覧",
+                  "うちの子 登録",
                   style: TextStyle(fontSize: 24.0),
                 ),
               ),
               Container(
                 height: size.height - 170,
-                child: Consumer(
-                  builder: (context, watch, child) {
-                    final state = watch(petsNotifierProvider.state);
-
-                    if (state is PetsInitial) {
-                      _fetchPets(context);
-                      return _buildLoading();
-                    } else if (state is PetsLoading) {
-                      return _buildLoading();
-                    } else if (state is PetsLoaded) {
-                      return _buildLoaded(state.pets);
-                    } else {
-                      return _buildInitial();
-                    }
-                  },
-                ),
+                // color: Colors.greenAccent,
+                child: Body(),
               ),
             ],
           ),
@@ -142,32 +121,16 @@ class __ScreenState extends State<_Screen> {
     );
   }
 
-  void _fetchPets(BuildContext context) {
-    context.read(petsNotifierProvider).fetchPets();
-  }
-
-  Widget _buildInitial() {
-    return Container();
-  }
-
-  Widget _buildLoading() {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.only(bottom: 170),
-        child: LoadingCircle(),
+  Widget _buildLabel(String label) {
+    return Container(
+      color: Colors.redAccent,
+      child: Row(
+        children: [
+          Icon(FontAwesomeIcons.squareFull, size: 12,),
+          SizedBox(width: 9,),
+          Text(label, style: TextStyle(fontSize: 18),),
+        ],
       ),
-    );
-  }
-
-  Widget _buildLoaded(List<PetModel> pets) {
-    return ListView.separated(
-      itemCount: pets.length,
-      itemBuilder: (context, index) {
-        return PetTile(pet: pets[index]);
-      },
-      separatorBuilder: (context, index) {
-        return Divider();
-      },
     );
   }
 }

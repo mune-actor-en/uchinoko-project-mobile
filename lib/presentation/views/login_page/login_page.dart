@@ -50,7 +50,7 @@ class Header extends StatelessWidget {
         children: <Widget>[
           Center(
             child: Text(
-              "Login",
+              "ログイン",
               style: TextStyle(color: Colors.white, fontSize: 40),
             ),
           ),
@@ -59,7 +59,7 @@ class Header extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "Welcome to Inside Android",
+              "おかえりなさい",
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           )
@@ -190,6 +190,7 @@ class InputField extends StatelessWidget {
               border: Border(bottom: BorderSide(color: Colors.grey[200]))),
           child: TextField(
             onChanged: (e) => setPassword(e),
+            obscureText: true,
             decoration: InputDecoration(
                 hintText: "Enter your password",
                 hintStyle: TextStyle(color: Colors.grey),

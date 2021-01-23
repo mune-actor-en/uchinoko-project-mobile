@@ -44,4 +44,12 @@ class PetsNotifier extends StateNotifier<PetsState> {
       );
     }
   }
+
+  Future<void> createPet() async {
+    try {
+
+    } on Exception {
+      
+    }
+  }
 }
