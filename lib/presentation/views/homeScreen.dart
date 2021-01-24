@@ -1,6 +1,15 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
+import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
-import 'package:uchinoko_project_mobile/presentation/views/screen2.dart';
+import 'package:uchinoko_project_mobile/presentation/views/loading_circle.dart';
+import 'package:uchinoko_project_mobile/presentation/views/post_container.dart';
+import 'package:uchinoko_project_mobile/providers.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = getScreenSize(context);
+
     return AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor)
@@ -30,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 50,
             ),
+
+            /// Appbar
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               child: Row(
@@ -59,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           }),
                   Column(
                     children: [
-                      Text('Location'),
+                      Text('タイムライン'),
                       Row(
                         children: [
                           Icon(
@@ -71,15 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: NetworkImage(
-                      "https://user-images.githubusercontent.com/46050182/100489814-01167a00-315a-11eb-885b-2156062cc5bf.png"
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.title, color: Colors.transparent),
+                    onPressed: null,
                   ),
                 ],
               ),
             ),
+
+            /// Search window
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
@@ -94,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+
+            /// ペットカテゴリー
             Container(
               height: 120,
               child: ListView.builder(
@@ -107,14 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.all(10),
                           margin: EdgeInsets.only(left: 20),
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: index == 0 ? primaryGreen : Colors.white,
                               boxShadow: shadowList,
                               borderRadius: BorderRadius.circular(10)),
                           child: Image.asset(
                             categories[index]['iconPath'],
-                            height: 50,
-                            width: 50,
-                            color: Colors.grey[700],
+                            height: 54,
+                            width: 54,
+                            color: index == 0 ? Colors.white : Colors.grey[700],
                           ),
                         ),
                         Text(categories[index]['name'])
@@ -124,136 +139,82 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Screen2(),
-                  ),
-                );
-              },
-              child: Container(
-                height: 240,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.blueGrey[300],
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: shadowList,
-                            ),
-                            margin: EdgeInsets.only(top: 50),
-                          ),
-                          // Align(
-                          //   child: Hero(
-                          //       tag: 1,
-                          //       child:
-                          //           Image.asset('assets/images/pet-cat2.png')),
-                          // )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(top: 60, bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: shadowList,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                      ),
-                    ))
-                  ],
-                ),
-              ),
-            ),
+
+            /// 投稿エリア
             Container(
-              height: 240,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange[100],
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
-                          ),
-                          margin: EdgeInsets.only(top: 50),
-                        ),
-                        // Align(
-                        //   child: Image.asset('assets/images/pet-cat1.png'),
-                        // )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Container(
-                    margin: EdgeInsets.only(top: 60, bottom: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: shadowList,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                  ))
-                ],
+              child: Consumer(
+                builder: (context, watch, child) {
+                  final state = watch(petsNotifierProvider.state);
+
+                  if (state is PetsInitial) {
+                    _fetchPets(context);
+                    return _buildLoading(size);
+                  } else if (state is PetsLoading) {
+                    return _buildLoading(size);
+                  } else if (state is PetsLoaded) {
+                    return _buildLoaded(state.pets);
+                  } else {
+                    return _buildInitial();
+                  }
+                },
               ),
             ),
-            Container(
-              height: 240,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange[100],
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: shadowList,
-                          ),
-                          margin: EdgeInsets.only(top: 50),
-                        ),
-                        // Align(
-                        //   child: Image.asset('assets/images/pet-cat1.png'),
-                        // )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 60, bottom: 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: shadowList,
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                        ),
-                      ))
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 50,
-            )
+            SizedBox(height: 50),
           ],
         ),
       ),
+    );
+  }
+
+  void _fetchPets(BuildContext context) {
+    context.read(petsNotifierProvider).fetchPets();
+  }
+
+  Widget _buildInitial() {
+    return Container();
+  }
+
+  Widget _buildLoading(Size size) {
+    return Center(
+      child: Container(
+        height: size.height - 120,
+        margin: EdgeInsets.only(bottom: 170),
+        child: Column(
+          children: [
+            SizedBox(height: size.height * 0.1),
+            LoadingCircle(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoaded(List<PetModel> pets) {
+    return Column(
+      children: [
+        PostContainer(
+          name: 'にゃんねこ（野良）',
+          description:
+              '吾輩は猫である。\n名前はまだない。\nどこで生れたか頓（とん）と見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮て食うという話である。',
+        ),
+        PostContainer(
+          name: 'オードリータン',
+          description: '私のすべてを、明るみに出しましょう。私が見ている自由な未来を、皆さんと共有するために',
+          petImageUrl:
+              'https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          postImageUrl:
+              'https://images.pexels.com/photos/1472999/pexels-photo-1472999.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+        ),
+        PostContainer(
+          name: '猫耳族 二等兵',
+          petImageUrl:
+              'https://images.pexels.com/photos/1576193/pexels-photo-1576193.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          postImageUrl:
+              'https://images.pexels.com/photos/1444492/pexels-photo-1444492.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          description:
+              '「ネコ耳族」は、相手に攻撃された時に、相手モンスターの元々の攻撃力を200にするモンスター。 装備魔法やフィールド魔法で強化すれば、相手モンスターの攻撃で倒されなくなる',
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/all.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/application/session_notifier.dart';
 import 'package:uchinoko_project_mobile/main.dart';
 import 'package:uchinoko_project_mobile/providers.dart';
@@ -91,6 +96,13 @@ class _InputWrapperState extends State<InputWrapper> {
           email: email,
           password: password,
         );
+  }
+
+  @override
+  void initState() {
+    email = 'hoge002@gmail.com';
+    password = 'hoge002';
+    super.initState();
   }
 
   @override

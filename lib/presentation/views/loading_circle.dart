@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 
 class LoadingCircle extends StatelessWidget {

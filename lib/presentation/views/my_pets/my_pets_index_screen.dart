@@ -1,13 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
-import 'package:uchinoko_project_mobile/presentation/views/my_pets/add_pet_screen.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
 import 'package:uchinoko_project_mobile/presentation/views/loading_circle.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets/add_pet_screen.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets/my_pet_show.dart';
 import 'package:uchinoko_project_mobile/providers.dart';
 
 class MyPetsIndexScreen extends StatelessWidget {
@@ -34,12 +40,6 @@ class __ScreenState extends State<_Screen> {
   double yOffset = 0;
   double scaleFactor = 1;
   bool isDrawerOpen = false;
-
-  @override
-  void initState() {
-    print("init State");
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,6 +181,14 @@ class PetTile extends StatelessWidget {
   @override
   ListTile build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => MyPetShow(pet: pet),
+          ),
+        );
+      },
       contentPadding: EdgeInsets.symmetric(horizontal: 24),
       leading: CircleAvatar(
         backgroundColor: primaryGreen,

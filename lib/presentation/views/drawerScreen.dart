@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:flutter_riverpod/all.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/login_page/login_page.dart';
-import 'package:flutter_riverpod/all.dart';
 import 'package:uchinoko_project_mobile/providers.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -12,7 +17,6 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
-
     return Container(
       color: primaryGreen,
       padding: EdgeInsets.only(top: 50, bottom: 70, left: 10),
@@ -21,7 +25,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
         children: [
           Row(
             children: [
-              CircleAvatar(),
+              Container(
+                margin: EdgeInsets.all(9),
+                child: CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.white,
+                  backgroundImage: NetworkImage(
+                      "https://user-images.githubusercontent.com/46050182/100489814-01167a00-315a-11eb-885b-2156062cc5bf.png"),
+                ),
+              ),
               SizedBox(
                 width: 10,
               ),
@@ -29,13 +41,21 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Miroslava Savitskaya',
+                    'Uchinoko',
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Text('Active Status',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold))
+                  Text(
+                    'Menu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
                 ],
               )
             ],
@@ -77,6 +97,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     ))
                 .toList(),
           ),
+          Container(),
           Row(
             children: [
               Icon(
@@ -104,18 +125,58 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  context.read(sessionNotifierProvider).logout();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LoginPage(),
-                    ),
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        content: Text('ログアウトします。\nよろしいですか？'),
+                        actions: [
+                          Row(
+                            children: [
+                              InkWell(
+                                child: Container(
+                                  child: Text(
+                                    'キャンセル',
+                                    style: TextStyle(color: Colors.blueAccent),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 6),
+                                ),
+                                onTap: () => Navigator.pop(context),
+                              ),
+                              InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: 6),
+                                  child: Text(
+                                    'ログアウト',
+                                    style: TextStyle(color: Colors.blueAccent),
+                                  ),
+                                ),
+                                onTap: () {
+                                  context
+                                      .read(sessionNotifierProvider)
+                                      .logout();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => LoginPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          ),
+                        ],
+                      );
+                    },
                   );
                 },
                 child: Text(
                   'Log out',
-                  style:
-                      TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               )
             ],

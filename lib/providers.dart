@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:flutter_riverpod/all.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/application/session_notifier.dart';
 import 'package:uchinoko_project_mobile/infrastructure/repository/pet_repository.dart';
@@ -9,7 +12,7 @@ final _petRepositoryProvider = Provider<PetModelRepository>(
   (ref) => PetModelRepository(httpService: HttpService()),
 );
 
-final petsNotifierProvider = StateNotifierProvider(
+final petsNotifierProvider = StateNotifierProvider<PetsNotifier>(
   (ref) => PetsNotifier(
     petModelRepository: ref.watch(_petRepositoryProvider),
   ),

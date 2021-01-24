@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
 import 'package:uchinoko_project_mobile/infrastructure/repository/pet_repository.dart';
 
@@ -34,7 +39,7 @@ class PetsNotifier extends StateNotifier<PetsState> {
 
   Future<void> fetchPets() async {
     try {
-      await Future.delayed(Duration(milliseconds: 1500));
+      await Future.delayed(Duration(milliseconds: 3000));
       state = PetsLoading();
       final List<PetModel> pets = await petModelRepository.fetchPets();
       state = PetsLoaded(pets: pets);

@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+// Project imports:
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
 import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
@@ -30,12 +35,6 @@ class __ScreenState extends State<_Screen> {
   double yOffset = 0;
   double scaleFactor = 1;
   bool isDrawerOpen = false;
-
-  @override
-  void initState() {
-    print("init State");
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,35 +100,13 @@ class __ScreenState extends State<_Screen> {
                 ),
               ),
               Container(
-                height: 50,
-                alignment: Alignment.bottomLeft,
-                padding: EdgeInsets.symmetric(horizontal: 36),
-                child: Text(
-                  "うちの子 登録",
-                  style: TextStyle(fontSize: 24.0),
-                ),
-              ),
-              Container(
-                height: size.height - 170,
+                height: size.height - 120,
                 // color: Colors.greenAccent,
                 child: Body(),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildLabel(String label) {
-    return Container(
-      color: Colors.redAccent,
-      child: Row(
-        children: [
-          Icon(FontAwesomeIcons.squareFull, size: 12,),
-          SizedBox(width: 9,),
-          Text(label, style: TextStyle(fontSize: 18),),
-        ],
       ),
     );
   }
