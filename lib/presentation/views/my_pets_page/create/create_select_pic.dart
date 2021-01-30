@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfilePic extends StatefulWidget {
-  const ProfilePic({
+class CreateSelectPic extends StatefulWidget {
+  const CreateSelectPic({
     Key key,
   }) : super(key: key);
 
   @override
-  _ProfilePicState createState() => _ProfilePicState();
+  _CreateSelectPicState createState() => _CreateSelectPicState();
 }
 
-class _ProfilePicState extends State<ProfilePic> {
+class _CreateSelectPicState extends State<CreateSelectPic> {
   File _image;
   final picker = ImagePicker();
 
@@ -51,7 +51,7 @@ class _ProfilePicState extends State<ProfilePic> {
             backgroundImage: _image == null
                 ? null
                 : FileImage(_image),
-                // : Image.file(_image),
+            // : Image.file(_image),
           ),
           Positioned(
             right: -16,

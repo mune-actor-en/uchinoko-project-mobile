@@ -2,21 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
-import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
-import 'package:uchinoko_project_mobile/presentation/views/loading_circle.dart';
-import 'package:uchinoko_project_mobile/presentation/views/my_pets/add_pet_screen.dart';
-import 'package:uchinoko_project_mobile/presentation/views/my_pets/my_pet_show.dart';
-import 'package:uchinoko_project_mobile/providers.dart';
+import 'package:uchinoko_project_mobile/presentation/views/all/drawer_screen.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/create_body.dart';
 
-class MyPetsIndexScreen extends StatelessWidget {
+class MyPetCreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +83,7 @@ class __ScreenState extends State<_Screen> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('うちの子 一覧'),
+                        Text('うちの子 登録'),
                         Row(
                           children: [
                             Icon(
@@ -100,75 +95,19 @@ class __ScreenState extends State<_Screen> {
                         ),
                       ],
                     ),
-                    IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.plus,
-                        color: primaryGreen,
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => AddPetScreen(),
-                          ),
-                        );
-                      },
-                    ),
+                    Text('登録', style: TextStyle(color: Colors.lightBlue),)
                   ],
                 ),
               ),
               Container(
                 height: size.height - 120,
-                child: Consumer(
-                  builder: (context, watch, child) {
-                    final state = watch(petsNotifierProvider.state);
-
-                    if (state is PetsInitial) {
-                      _fetchPets(context);
-                      return _buildLoading();
-                    } else if (state is PetsLoading) {
-                      return _buildLoading();
-                    } else if (state is PetsLoaded) {
-                      return _buildLoaded(state.pets);
-                    } else {
-                      return _buildInitial();
-                    }
-                  },
-                ),
+                // color: Colors.greenAccent,
+                child: CreateBody(),
               ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  void _fetchPets(BuildContext context) {
-    context.read(petsNotifierProvider).fetchPets();
-  }
-
-  Widget _buildInitial() {
-    return Container();
-  }
-
-  Widget _buildLoading() {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.only(bottom: 170),
-        child: LoadingCircle(),
-      ),
-    );
-  }
-
-  Widget _buildLoaded(List<PetModel> pets) {
-    return ListView.separated(
-      itemCount: pets.length,
-      itemBuilder: (context, index) {
-        return PetTile(pet: pets[index]);
-      },
-      separatorBuilder: (context, index) {
-        return Divider();
-      },
     );
   }
 }
@@ -181,14 +120,6 @@ class PetTile extends StatelessWidget {
   @override
   ListTile build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => MyPetShow(pet: pet),
-          ),
-        );
-      },
       contentPadding: EdgeInsets.symmetric(horizontal: 24),
       leading: CircleAvatar(
         backgroundColor: primaryGreen,

@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
+
+// Project imports:
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 
 class PostContainer extends StatefulWidget {
   final String postImageUrl;

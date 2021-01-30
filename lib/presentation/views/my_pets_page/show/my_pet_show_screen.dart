@@ -1,23 +1,23 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/date_formatter.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
-import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
+import 'package:uchinoko_project_mobile/presentation/views/all/drawer_screen.dart';
 
-class MyPetShow extends StatelessWidget {
+class MyPetShowScreen extends StatelessWidget {
   final PetModel pet;
 
-  const MyPetShow({this.pet});
+  const MyPetShowScreen({this.pet});
 
   @override
   Widget build(BuildContext context) {

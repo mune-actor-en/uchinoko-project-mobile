@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 
 class LoadingCircle extends StatelessWidget {
   @override

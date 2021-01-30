@@ -5,42 +5,45 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/presentation/views/profile/components/profile_menu.dart';
-import 'package:uchinoko_project_mobile/presentation/views/profile/components/profile_pic.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/create_select_pic.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/input_birthday.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/input_date.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/input_gender.dart';
+import 'package:uchinoko_project_mobile/presentation/views/my_pets_page/create/input_name.dart';
 
-class Body extends StatelessWidget {
+class CreateBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
+          CreateSelectPic(),
           SizedBox(height: 20),
-          ProfileMenu(
+          InputName(
             // name: '',
             text: "なまえ",
             icon: FontAwesomeIcons.signature,
             press: () {},
           ),
-          ProfileGender(
+          InputGender(
             // sex: '',
             text: "性別",
             icon: FontAwesomeIcons.venusMars,
             press: () {},
           ),
-          ProfileBirthday(
+          InputBirthday(
             // dateTime: null,
             text: "お誕生日",
             icon: FontAwesomeIcons.calendarAlt,
             press: () {},
           ),
-          ProfileDate(
+          InputDate(
             text: "お迎え日",
             icon: FontAwesomeIcons.car,
             press: () {},
           ),
-          ProfileMenu(
+          InputName(
             // description: '',
             text: "うちの子の推しポイント",
             icon: FontAwesomeIcons.fish,

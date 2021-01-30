@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
+import 'package:uchinoko_project_mobile/application/providers.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/views/login_page/login_page.dart';
-import 'package:uchinoko_project_mobile/providers.dart';
 
 class DrawerScreen extends StatefulWidget {
   @override
@@ -63,38 +63,38 @@ class _DrawerScreenState extends State<DrawerScreen> {
           Column(
             children: drawerItems
                 .map((element) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          print("menu item is tapped!");
-                          if (element['screen'] != null) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => element['screen'],
-                              ),
-                            );
-                          }
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              element['icon'],
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(element['title'],
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18))
-                          ],
-                        ),
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  print("menu item is tapped!");
+                  if (element['screen'] != null) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => element['screen'],
                       ),
-                    ))
+                    );
+                  }
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      element['icon'],
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(element['title'],
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18))
+                  ],
+                ),
+              ),
+            ))
                 .toList(),
           ),
           Container(),
@@ -110,7 +110,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Text(
                 'Settings',
                 style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 width: 10,

@@ -1,22 +1,24 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_riverpod/all.dart';
-import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
-import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
-import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
-import 'package:uchinoko_project_mobile/presentation/views/loading_circle.dart';
-import 'package:uchinoko_project_mobile/presentation/views/post_container.dart';
-import 'package:uchinoko_project_mobile/providers.dart';
+import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
+import 'package:uchinoko_project_mobile/application/providers.dart';
+import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
+import 'package:uchinoko_project_mobile/presentation/views/all/loading_circle.dart';
+import 'package:uchinoko_project_mobile/presentation/views/timeline_page/create/post_container.dart';
 
-class HomeScreen extends StatefulWidget {
+class TimelineBody extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _TimelineBodyState createState() => _TimelineBodyState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TimelineBodyState extends State<TimelineBody> {
   double xOffset = 0;
   double yOffset = 0;
   double scaleFactor = 1;
@@ -50,26 +52,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   isDrawerOpen
                       ? IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 0;
-                              yOffset = 0;
-                              scaleFactor = 1;
-                              isDrawerOpen = false;
-                            });
-                          },
-                        )
+                    icon: Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      setState(() {
+                        xOffset = 0;
+                        yOffset = 0;
+                        scaleFactor = 1;
+                        isDrawerOpen = false;
+                      });
+                    },
+                  )
                       : IconButton(
-                          icon: Icon(Icons.menu),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 230;
-                              yOffset = 150;
-                              scaleFactor = 0.6;
-                              isDrawerOpen = true;
-                            });
-                          }),
+                      icon: Icon(Icons.menu),
+                      onPressed: () {
+                        setState(() {
+                          xOffset = 230;
+                          yOffset = 150;
+                          scaleFactor = 0.6;
+                          isDrawerOpen = true;
+                        });
+                      }),
                   Column(
                     children: [
                       Text('タイムライン'),
@@ -195,24 +197,24 @@ class _HomeScreenState extends State<HomeScreen> {
         PostContainer(
           name: 'にゃんねこ（野良）',
           description:
-              '吾輩は猫である。\n名前はまだない。\nどこで生れたか頓（とん）と見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮て食うという話である。',
+          '吾輩は猫である。\n名前はまだない。\nどこで生れたか頓（とん）と見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮て食うという話である。',
         ),
         PostContainer(
           name: 'オードリータン',
           description: '私のすべてを、明るみに出しましょう。私が見ている自由な未来を、皆さんと共有するために',
           petImageUrl:
-              'https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           postImageUrl:
-              'https://images.pexels.com/photos/1472999/pexels-photo-1472999.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/1472999/pexels-photo-1472999.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
         ),
         PostContainer(
           name: '猫耳族 二等兵',
           petImageUrl:
-              'https://images.pexels.com/photos/1576193/pexels-photo-1576193.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/1576193/pexels-photo-1576193.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           postImageUrl:
-              'https://images.pexels.com/photos/1444492/pexels-photo-1444492.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+          'https://images.pexels.com/photos/1444492/pexels-photo-1444492.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
           description:
-              '「ネコ耳族」は、相手に攻撃された時に、相手モンスターの元々の攻撃力を200にするモンスター。 装備魔法やフィールド魔法で強化すれば、相手モンスターの攻撃で倒されなくなる',
+          '「ネコ耳族」は、相手に攻撃された時に、相手モンスターの元々の攻撃力を200にするモンスター。 装備魔法やフィールド魔法で強化すれば、相手モンスターの攻撃で倒されなくなる',
         ),
       ],
     );

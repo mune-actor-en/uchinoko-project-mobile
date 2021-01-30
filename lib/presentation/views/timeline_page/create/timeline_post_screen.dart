@@ -1,13 +1,19 @@
+// Dart imports:
 import 'dart:io';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
-import 'package:uchinoko_project_mobile/presentation/views/configuration.dart';
-import 'package:uchinoko_project_mobile/presentation/views/drawerScreen.dart';
 
-class PostScreen extends StatelessWidget {
+// Project imports:
+import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
+import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
+import 'package:uchinoko_project_mobile/presentation/views/all/drawer_screen.dart';
+
+class TimelinePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
