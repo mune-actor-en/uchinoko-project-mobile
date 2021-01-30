@@ -1,16 +1,26 @@
 # uchinoko_project_mobile
 
-A new Flutter application.
+Dart(Flutter)による「うちの子プロジェクト」のモバイル開発
 
-## Getting Started
+開発期間： 約２ヶ月（2020年12月 〜 2021年1月）
 
-This project is a starting point for a Flutter application.
+メンバー： ogen3 
+(他メンバー： Webフロント、バックエンド)
 
-A few resources to get you started if this is your first Flutter project:
+今後改善できる(すべき)もの：
+・Widgetのもう少し細かく分割
+・テキストの一箇所管理
+・タイムラインの無限スクロール化（ページが最後までスクロールされる度に新しいデータを取得）
+・各所にダイアログを追加（投稿直前など）
+・ログイン状態の保持（ローカルストレージの利用）
+・多言語化
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+感想・学び：
+チーム開発を経験しようということで、とらゼミ内から有志で５人が集まった。
+個人的にはモバイルが一人だったので他メンバーよりチーム開発感が薄れてしまったのが残念である。
+全員がリモートでの開発だったこともあり、モチベーションの維持が一番大きな問題であった。
+API連携の部分でやり残している部分があるものの、UIをはじめ、ほぼほぼロジックは作り終えることができ、達成感がある。
+また、今回のプロジェクト遂行には日々本業がある中でのセルフマネジメントが必要で、定期的な進捗報告やオンライン会議がチーム開発では重要になってくることがわかった。
+こういったイベントは今後も機会があれば行っていきたい。
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+READ.ME上ですが、メンバーの皆さんありがとうございました。
