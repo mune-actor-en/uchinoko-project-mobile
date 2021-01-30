@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class LoginHeader extends StatelessWidget {
+class RegisterHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -13,7 +13,7 @@ class LoginHeader extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  "ログイン",
+                  "新規登録",
                   style: TextStyle(color: Colors.white, fontSize: 40),
                 ),
               ),
@@ -22,7 +22,7 @@ class LoginHeader extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  "おかえりなさい",
+                  "Uchinokoへようこそ",
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               )

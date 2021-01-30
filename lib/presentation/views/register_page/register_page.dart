@@ -1,13 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
+import 'package:uchinoko_project_mobile/presentation/views/login_page/login_page.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/presentation/views/login_page/input_wrapper.dart';
-import 'package:uchinoko_project_mobile/presentation/views/login_page/login_header.dart';
-import 'package:uchinoko_project_mobile/presentation/views/register_page/register_page.dart';
+import 'package:uchinoko_project_mobile/presentation/views/register_page/register_header.dart';
+import 'package:uchinoko_project_mobile/presentation/views/register_page/register_input.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = getScreenSize(context);
@@ -24,14 +24,14 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             InkWell(
               onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RegisterPage()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginPage()));
               },
               child: Container(
                 margin: EdgeInsets.only(top: 54, right: 30),
                 width: size.width,
                 alignment: Alignment.centerRight,
                 child: Text(
-                  '新規登録',
+                  'ログイン',
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            LoginHeader(),
+            RegisterHeader(),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                     topRight: Radius.circular(60),
                   ),
                 ),
-                child: InputWrapper(),
+                child: RegisterInput(),
               ),
             ),
           ],
