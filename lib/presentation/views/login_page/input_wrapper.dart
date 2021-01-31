@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
 import 'package:uchinoko_project_mobile/application/providers.dart';
-import 'package:uchinoko_project_mobile/application/session_notifier.dart';
+import 'package:uchinoko_project_mobile/application/controller/session_notifier.dart';
 import 'package:uchinoko_project_mobile/presentation/views/timeline_page/index/timeline_screen.dart';
 
 class InputWrapper extends StatefulWidget {

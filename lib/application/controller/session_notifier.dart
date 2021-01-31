@@ -9,7 +9,9 @@ import 'package:uchinoko_project_mobile/infrastructure/model/user_model.dart';
 import 'package:uchinoko_project_mobile/infrastructure/repository/session_repository.dart';
 
 abstract class SessionState{
-  const SessionState();
+  const SessionState({this.session});
+  final SessionModel session;
+
 }
 
 class SessionJudge extends SessionState {
@@ -33,6 +35,9 @@ class SessionError extends SessionState {
 class SessionNotifier extends StateNotifier<SessionState> {
   SessionNotifier({this.sessionRepository}) : super(SessionJudge());
   final SessionRepository sessionRepository;
+
+  int getUserId() => state.session.uid;
+  String getJwt() => state.session.token;
 
   Future<void> login({@required String email, @required String password,}) async {
     try {

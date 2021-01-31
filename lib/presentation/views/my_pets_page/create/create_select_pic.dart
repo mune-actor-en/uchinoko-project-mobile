@@ -9,8 +9,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateSelectPic extends StatefulWidget {
+  final void Function(String) callback;
+
   const CreateSelectPic({
     Key key,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -33,7 +36,10 @@ class _CreateSelectPicState extends State<CreateSelectPic> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      _image = File(pickedFile.path);
+      var _imagePath = pickedFile.path;
+      print(_imagePath);
+      _image = File(_imagePath);
+      widget.callback(_imagePath);
     });
   }
 

@@ -8,16 +8,16 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/date_formatter.dart';
 
 class InputBirthday extends StatefulWidget {
+  final String text;
+  final IconData icon;
+  final void Function(String) callback;
+
   const InputBirthday({
     Key key,
     @required this.text,
     @required this.icon,
-    this.press,
+    @required this.callback,
   }) : super(key: key);
-
-  final String text;
-  final IconData icon;
-  final VoidCallback press;
 
   @override
   _InputBirthdayState createState() => _InputBirthdayState();
@@ -61,11 +61,12 @@ class _InputBirthdayState extends State<InputBirthday> {
                           DatePicker.showDatePicker(context,
                               showTitleActions: true,
                               minTime: DateTime(1950, 1, 1),
-                              maxTime: DateTime.now(), onChanged: (date) {
-                                print('change $date');
-                              }, onConfirm: (date) {
+                              maxTime: DateTime.now(),
+                              onChanged: (date) {},
+                              onConfirm: (date) {
                                 print('confirm $date');
                                 setState(() {
+                                  widget.callback(DateFormatter.generateForCreate(date));
                                   _date = DateFormatter.generateStr(date);
                                 });
                               },

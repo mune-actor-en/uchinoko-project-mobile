@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -58,12 +60,12 @@ class _PostContainerState extends State<PostContainer> {
         children: [
           ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(widget.petImageUrl),
+              backgroundImage: FileImage(File(widget.petImageUrl)),
             ),
             title: Text(widget.name),
           ),
           Container(
-            child: Image.network(widget.postImageUrl),
+            child: Image.file(File(widget.postImageUrl)),
           ),
           Column(
             children: [

@@ -1,13 +1,14 @@
 // Flutter imports:
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/application/providers.dart';
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
+import 'package:uchinoko_project_mobile/infrastructure/model/post_model.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
 import 'package:uchinoko_project_mobile/presentation/views/all/loading_circle.dart';
@@ -18,12 +19,28 @@ class TimelineBody extends StatefulWidget {
   _TimelineBodyState createState() => _TimelineBodyState();
 }
 
-class _TimelineBodyState extends State<TimelineBody> {
+class _TimelineBodyState extends State<TimelineBody> with AfterLayoutMixin {
   double xOffset = 0;
   double yOffset = 0;
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
+  List<PostModel> posts;
+
+  @override
+  void initState() {
+    posts = [];
+    super.initState();
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) async {
+    await context.read(timelineNotifierProvider).fetchPosts();
+    setState(() {
+      posts = context.read(timelineNotifierProvider.state).posts;
+    });
+    print(posts);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,18 +163,12 @@ class _TimelineBodyState extends State<TimelineBody> {
             Container(
               child: Consumer(
                 builder: (context, watch, child) {
-                  final state = watch(petsNotifierProvider.state);
+                  final state = watch(timelineNotifierProvider.state);
 
-                  if (state is PetsInitial) {
-                    _fetchPets(context);
-                    return _buildLoading(size);
-                  } else if (state is PetsLoading) {
-                    return _buildLoading(size);
-                  } else if (state is PetsLoaded) {
-                    return _buildLoaded(state.pets);
-                  } else {
-                    return _buildInitial();
-                  }
+                  return state.isLoading
+                      ? _buildLoading(size)
+                      : _buildLoaded(context, posts);
+
                 },
               ),
             ),
@@ -166,14 +177,6 @@ class _TimelineBodyState extends State<TimelineBody> {
         ),
       ),
     );
-  }
-
-  void _fetchPets(BuildContext context) {
-    context.read(petsNotifierProvider).fetchPets();
-  }
-
-  Widget _buildInitial() {
-    return Container();
   }
 
   Widget _buildLoading(Size size) {
@@ -191,32 +194,54 @@ class _TimelineBodyState extends State<TimelineBody> {
     );
   }
 
-  Widget _buildLoaded(List<PetModel> pets) {
-    return Column(
-      children: [
+  Widget _buildLoaded(BuildContext context, List<PostModel> posts) {
+    final List<Widget> _list = [];
+    final List<PetModel> pets = context.read(petsNotifierProvider.state).pets;
+
+    posts.forEach((post) {
+      PetModel pet;
+
+      pets.forEach((element) {
+        if (element.id == post.petId) pet = element;
+      });
+
+      _list.add(
         PostContainer(
-          name: 'にゃんねこ（野良）',
-          description:
-          '吾輩は猫である。\n名前はまだない。\nどこで生れたか頓（とん）と見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮て食うという話である。',
+          postImageUrl: post.imagePath,
+          description: post.description,
+          name: pet.name,
+          petImageUrl: pet.imagePath,
         ),
-        PostContainer(
-          name: 'オードリータン',
-          description: '私のすべてを、明るみに出しましょう。私が見ている自由な未来を、皆さんと共有するために',
-          petImageUrl:
-          'https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          postImageUrl:
-          'https://images.pexels.com/photos/1472999/pexels-photo-1472999.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-        ),
-        PostContainer(
-          name: '猫耳族 二等兵',
-          petImageUrl:
-          'https://images.pexels.com/photos/1576193/pexels-photo-1576193.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          postImageUrl:
-          'https://images.pexels.com/photos/1444492/pexels-photo-1444492.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-          description:
-          '「ネコ耳族」は、相手に攻撃された時に、相手モンスターの元々の攻撃力を200にするモンスター。 装備魔法やフィールド魔法で強化すれば、相手モンスターの攻撃で倒されなくなる',
-        ),
-      ],
-    );
+      );
+    });
+
+    return Column(children: _list);
+
+    // return Column(
+    //   children: [
+    //     PostContainer(
+    //       name: 'にゃんねこ（野良）',
+    //       description:
+    //       '吾輩は猫である。\n名前はまだない。\nどこで生れたか頓（とん）と見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪（どうあく）な種族であったそうだ。この書生というのは時々我々を捕（つかま）えて煮て食うという話である。',
+    //     ),
+    //     PostContainer(
+    //       name: 'オードリータン',
+    //       description: '私のすべてを、明るみに出しましょう。私が見ている自由な未来を、皆さんと共有するために',
+    //       petImageUrl:
+    //       'https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    //       postImageUrl:
+    //       'https://images.pexels.com/photos/1472999/pexels-photo-1472999.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    //     ),
+    //     PostContainer(
+    //       name: '猫耳族 二等兵',
+    //       petImageUrl:
+    //       'https://images.pexels.com/photos/1576193/pexels-photo-1576193.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    //       postImageUrl:
+    //       'https://images.pexels.com/photos/1444492/pexels-photo-1444492.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+    //       description:
+    //       '「ネコ耳族」は、相手に攻撃された時に、相手モンスターの元々の攻撃力を200にするモンスター。 装備魔法やフィールド魔法で強化すれば、相手モンスターの攻撃で倒されなくなる',
+    //     ),
+    //   ],
+    // );
   }
 }

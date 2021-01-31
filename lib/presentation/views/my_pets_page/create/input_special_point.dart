@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class InputName extends StatelessWidget {
+class InputSpecialPoint extends StatelessWidget {
   final String text;
   final IconData icon;
   final void Function(String) callback;
 
-  const InputName({
+  const InputSpecialPoint({
     Key key,
     @required this.text,
     @required this.icon,

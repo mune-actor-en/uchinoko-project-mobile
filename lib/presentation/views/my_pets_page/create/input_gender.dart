@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class InputGender extends StatefulWidget {
+  final String text;
+  final IconData icon;
+  final void Function(String) callback;
+
   const InputGender({
     Key key,
     @required this.text,
     @required this.icon,
-    this.press,
+    @required this.callback,
   }) : super(key: key);
-
-  final String text;
-  final IconData icon;
-  final VoidCallback press;
 
   @override
   _InputGenderState createState() => _InputGenderState();
@@ -26,6 +26,7 @@ class _InputGenderState extends State<InputGender> {
   void _onChange(String val) {
     setState(() {
       _gender = val;
+      widget.callback(_gender);
     });
   }
 

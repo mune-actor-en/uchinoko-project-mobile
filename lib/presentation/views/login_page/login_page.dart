@@ -1,13 +1,27 @@
 // Flutter imports:
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:uchinoko_project_mobile/application/providers.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/get_screen_size.dart';
+import 'package:flutter_riverpod/all.dart';
 
 // Project imports:
 import 'package:uchinoko_project_mobile/presentation/views/login_page/input_wrapper.dart';
 import 'package:uchinoko_project_mobile/presentation/views/login_page/login_header.dart';
 import 'package:uchinoko_project_mobile/presentation/views/register_page/register_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with AfterLayoutMixin {
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    context.read(petsNotifierProvider).fetchPets();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = getScreenSize(context);

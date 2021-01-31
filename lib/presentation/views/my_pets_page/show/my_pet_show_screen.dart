@@ -99,43 +99,6 @@ class __ScreenState extends State<_Screen> {
   }
 }
 
-class PetTile extends StatelessWidget {
-  const PetTile({@required this.pet}) : super();
-
-  final PetModel pet;
-
-  @override
-  ListTile build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 24),
-      leading: CircleAvatar(
-        backgroundColor: primaryGreen,
-        backgroundImage: NetworkImage(pet.imagePath),
-        radius: 36,
-      ),
-      title: Text(pet.name),
-      subtitle: Text(
-        "スコティッシュ・フォールド",
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      trailing: Container(
-        child: "male" == pet.sex
-            ? Icon(
-                FontAwesomeIcons.mars,
-                size: 32,
-                color: Colors.blueAccent,
-              )
-            : Icon(
-                FontAwesomeIcons.venus,
-                size: 32,
-                color: Colors.redAccent,
-              ),
-      ),
-    );
-  }
-}
-
 class _Body extends StatelessWidget {
   final PetModel pet;
 
@@ -209,7 +172,7 @@ class _ProfilePicState extends State<ProfilePic> {
         children: [
           CircleAvatar(
             backgroundColor: Colors.black12,
-            backgroundImage: NetworkImage(widget.imgUrl),
+            backgroundImage: FileImage(File(widget.imgUrl)),
             // : Image.file(_image),
           ),
         ],

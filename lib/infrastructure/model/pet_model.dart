@@ -16,9 +16,9 @@ class PetModel {
   //<editor-fold desc="Data Methods" defaultstate="collapsed">
 
   const PetModel({
-    @required this.id,
-    @required this.createdAt,
-    @required this.updatedAt,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
     this.birthday,
     this.pickupDate,
     @required this.name,
@@ -112,9 +112,6 @@ class PetModel {
   Map<String, dynamic> toMap() {
     // ignore: unnecessary_cast
     return {
-      'id': this.id,
-      'createdAt': this.createdAt,
-      'updatedAt': this.updatedAt,
       'birthday': this.birthday,
       'pickupDate': this.pickupDate,
       'name': this.name,

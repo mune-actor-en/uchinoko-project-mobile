@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -6,7 +9,6 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // Project imports:
-import 'package:uchinoko_project_mobile/application/pets_notifier.dart';
 import 'package:uchinoko_project_mobile/application/providers.dart';
 import 'package:uchinoko_project_mobile/infrastructure/model/pet_model.dart';
 import 'package:uchinoko_project_mobile/presentation/utils/configuration.dart';
@@ -35,11 +37,16 @@ class _Screen extends StatefulWidget {
   __ScreenState createState() => __ScreenState();
 }
 
-class __ScreenState extends State<_Screen> {
+class __ScreenState extends State<_Screen> with AfterLayoutMixin {
   double xOffset = 0;
   double yOffset = 0;
   double scaleFactor = 1;
   bool isDrawerOpen = false;
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    context.read(petsNotifierProvider).fetchPets();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,16 +130,9 @@ class __ScreenState extends State<_Screen> {
                   builder: (context, watch, child) {
                     final state = watch(petsNotifierProvider.state);
 
-                    if (state is PetsInitial) {
-                      _fetchPets(context);
-                      return _buildLoading();
-                    } else if (state is PetsLoading) {
-                      return _buildLoading();
-                    } else if (state is PetsLoaded) {
-                      return _buildLoaded(state.pets);
-                    } else {
-                      return _buildInitial();
-                    }
+                    return state.isLoading
+                        ? _buildLoading()
+                        : _buildLoaded(state.pets);
                   },
                 ),
               ),
@@ -141,14 +141,6 @@ class __ScreenState extends State<_Screen> {
         ),
       ),
     );
-  }
-
-  void _fetchPets(BuildContext context) {
-    context.read(petsNotifierProvider).fetchPets();
-  }
-
-  Widget _buildInitial() {
-    return Container();
   }
 
   Widget _buildLoading() {
@@ -164,7 +156,8 @@ class __ScreenState extends State<_Screen> {
     return ListView.separated(
       itemCount: pets.length,
       itemBuilder: (context, index) {
-        return PetTile(pet: pets[index]);
+        var userId = context.read(sessionNotifierProvider).getUserId();
+        return userId == pets[index].userId ? PetTile(pet: pets[index]) : Container();
       },
       separatorBuilder: (context, index) {
         return Divider();
@@ -192,7 +185,7 @@ class PetTile extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 24),
       leading: CircleAvatar(
         backgroundColor: primaryGreen,
-        backgroundImage: NetworkImage(pet.imagePath),
+        backgroundImage: FileImage(File(pet.imagePath)),
         radius: 36,
       ),
       title: Text(pet.name),
